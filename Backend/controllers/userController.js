@@ -1,9 +1,45 @@
 const User = require('../model/UserSchema');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const createUser = async (req, res) => {
+const register = async (req, res) => {
     try {
+
+        const { username, email, password } = req.body;
+        if (!username || !email || !password) {
+            res.status(400);
+            throw new Error("all fields are mandatory")
+        }
         const user = await User.create(req.body);
         res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            res.status(400);
+            throw new Error('Email and password are required');
+        }
+        const user = await User.findOne({ email });
+        if (!user) {
+            res.status(401);
+            throw new Error('Invalid email or password');
+        }
+        const isMatch = await user.matchPassword(password);
+        if (!isMatch) {
+            res.status(401);
+            throw new Error('Invalid email or password');
+        }
+        res.json({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            token: generateToken(user._id)
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -54,4 +90,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, getAllUsers, getUser, updateUser, deleteUser };
+module.exports = { register, login, getAllUsers, getUser, updateUser, deleteUser };

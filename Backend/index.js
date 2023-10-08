@@ -3,6 +3,8 @@ const bodyParser = require("body-parser")
 const moongoose = require("mongoose")
 const dotenv = require('dotenv')
 const cors = require('cors')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const app = express();
 dotenv.config();
