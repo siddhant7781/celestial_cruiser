@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 
 class CustomAnimationWidget extends StatelessWidget {
+  final double? end;
   final Widget child;
   const CustomAnimationWidget({
     Key? key,
     required this.child,
+    this.end,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class CustomAnimationWidget extends StatelessWidget {
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(
         begin: 20,
-        end: -left,
+        end: end ?? -left,
       ),
       duration: const Duration(seconds: 1),
       curve: Curves.easeInOut,

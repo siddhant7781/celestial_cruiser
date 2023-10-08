@@ -3,8 +3,9 @@ import 'package:nasa_hackathon/src/di/injector.dart';
 import 'package:nasa_hackathon/src/res/colors.dart';
 import 'package:nasa_hackathon/src/views/splash_view.dart';
 
-void main() {
-  injectDependencies();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await injectDependencies();
   runApp(const SpaceTourismApp());
 }
 
@@ -14,7 +15,7 @@ class SpaceTourismApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
         appBarTheme: const AppBarTheme(

@@ -37,20 +37,69 @@ class ItenaryFragment extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-              itemCount: itenaries.length,
-              itemBuilder: (c, i) {
-                final e = itenaries[i];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: ItenaryItem(
-                    duration: e.startTime,
-                    description: e.description,
-                  ),
-                );
-              },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: List.generate(
+                  itenaries.length,
+                  (i) {
+                    final f = itenaries[i];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              "Day ${f.day}",
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontFamily: "Space",
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              f.items.length,
+                              (i) {
+                                final e = f.items[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: ItenaryItem(
+                                    duration: e.startTime,
+                                    description: e.description,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     physics: const BouncingScrollPhysics(),
+          //     itemCount: itenaries.length,
+          //     itemBuilder: (c, i) {
+          //       final e = itenaries[i];
+          //       return Padding(
+          //         padding: const EdgeInsets.only(bottom: 16.0),
+          //         child: ItenaryItem(
+          //           duration: e.startTime,
+          //           description: e.description,
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
@@ -78,17 +127,17 @@ class ItenaryItem extends StatelessWidget {
               angle: pi / 2,
               child: const Icon(Icons.rocket_rounded),
             ),
-            const SizedBox(width: 6),
-            SizedBox(
-              width: 50,
-              child: Text(
-                duration,
-                style: const TextStyle(
-                  fontFamily: "Montserrat",
-                  fontSize: 16,
-                ),
-              ),
-            ),
+            // const SizedBox(width: 6),
+            // SizedBox(
+            //   width: 50,
+            //   child: Text(
+            //     duration,
+            //     style: const TextStyle(
+            //       fontFamily: "Montserrat",
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(width: 6),
           ],
         ),

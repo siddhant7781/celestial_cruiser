@@ -68,8 +68,9 @@ extension DateUtils on DateTime {
   String get weekFormatCut => _weekDay[weekday] ?? '';
 
   String get formatted {
+    TimeOfDay cur = TimeOfDay.fromDateTime(this);
     var date = this;
-    return "${_weekDay[date.weekday]}, ${_months[date.month]} ${date.day}";
+    return "${_weekDay[date.weekday]}, ${_months[date.month]} ${date.day} | ${cur.stringify}";
   }
 
   String get msgFormat {
